@@ -1,5 +1,4 @@
 {
-  # This is a template created by `hix init`
   inputs.haskellNix.url = "github:input-output-hk/haskell.nix";
   inputs.nixpkgs.follows = "haskellNix/nixpkgs-unstable";
   inputs.flake-utils.url = "github:numtide/flake-utils";
@@ -25,18 +24,19 @@
         ];
         pkgs = import nixpkgs { inherit system overlays; inherit (haskellNix) config; };
         flake = pkgs.hixProject.flake {};
-      in flake // {
-        legacyPackages = pkgs;
+      in nixpkgs.lib.recursiveUpdate flake {
+        # legacyPackages = pkgs;
 
-        packages.default = flake.packages."zer0lang:exe:main";
+        packages = {
+          default = flake.packages."zer0lang:exe:main";
+          musl = flake.packages."x86_64-unknown-linux-musl:zer0lang:exe:main";
+          mingw = flake.packages."x86_64-w64-mingw32:zer0lang:exe:main";
+        };
       });
 
   # --- Flake Local Nix Configuration ----------------------------
   nixConfig = {
-    # This sets the flake to use the IOG nix cache.
-    # Nix should ask for permission before using it,
-    # but remove it here if you do not want it to.
-    extra-substituters = ["https://cache.iog.io" "https://cache.zw3rk.com"];
+    extra-substituters = ["https://cache.iog.io" "https://cache.zw3rk.com" "https://zer0lang.cachix.org"];
     extra-trusted-public-keys = ["hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ=" "loony-tools:pr9m4BkM/5/eSTZlkQyRt57Jz7OMBxNSUiMC4FkcNfk="];
     allow-import-from-derivation = "true";
   };

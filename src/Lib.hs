@@ -1,4 +1,4 @@
 module Lib where
 
 hello :: String
-hello = "Hello, World!"
+hello = "Hello, World!!"

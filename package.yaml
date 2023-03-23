@@ -5,9 +5,9 @@ author: "zer0-star"
 maintainer: "zer0star.65535@gmail.com"
 copyright: "2023 zer0-star"
 
-# extra-source-files:
-# - README.md
-# - ChangeLog.md
+extra-source-files:
+- README.md
+- package.yaml
 
 # Metadata used when publishing your package
 # synopsis:            Short description of your package
@@ -33,6 +33,12 @@ language: GHC2021
 ghc-options:
   - -Wall
   - -Wno-unused-imports
+
+custom-setup:
+  dependencies:
+    - base
+    - Cabal
+    - hpack
 
 library:
   source-dirs: src

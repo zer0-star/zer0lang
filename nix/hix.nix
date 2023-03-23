@@ -11,6 +11,8 @@
 
   supportHpack = true;
 
+  index-state = "2023-03-20T00:00:00Z";
+
   shell = {
     tools = {
       cabal = "latest";
@@ -18,7 +20,7 @@
       haskell-language-server = "latest";
       hpack = "latest";
       # fourmolu = "latest";
-      # stack = "latest";
     };
+    exactDeps = true;
   };
 }
